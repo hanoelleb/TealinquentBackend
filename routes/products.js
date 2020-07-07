@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 var productController = require('../controllers/productController');
+var reviewController = require('../controllers/reviewController');
+//PRODUCTS
 
 router.get('/', productController.product_list);
 
@@ -18,5 +20,23 @@ router.post('/update/:id', productController.product_update_post);
 router.get('/delete/:id', productController.product_delete_get);
 
 router.post('/delete/:id', productController.product_delete_post);
+
+//REVIEWS
+
+router.get('/:id/reviews', reviewController.review_list);
+
+router.get('/:id/reviews/:rid', reviewController.review_detail);
+
+router.get('/:id/reviews/create', reviewController.review_create_get);
+
+router.post('/:id/reviews/create', reviewController.review_create_post);
+
+router.get('/:id/reviews/:rid/update', reviewController.review_create_get);
+
+router.post('/:id/reviews/:rid/update', reviewController.review_create_post);
+
+router.get('/:id/reviews/:rid/delete', reviewController.review_create_get);
+
+router.post('/:id/reviews/:rid/delete', reviewController.review_create_post);
 
 module.exports = router;

@@ -3,7 +3,7 @@ exports.category_list = function(req, res, next) {
     res.send('NOT IMPLEMENTED: category list');
 }
 
-exports.category_list = function(req, res, next) {
+exports.category_detail = function(req, res, next) {
     res.send('NOT IMPLEMENTED: category detail');
 }
 

@@ -8,7 +8,8 @@ var ProductSchema = new Schema(
       price: {type: Number, required: true},
       stock: {type: Number, required: true},
       categories: [{type: Schema.Types.ObjectId, ref: 'Category'}],
-      reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
+      reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
+      img: { data: Buffer, contentType: String }
   }
 );
 
