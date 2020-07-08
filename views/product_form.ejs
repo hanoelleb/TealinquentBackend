@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'UTF-8'></meta>
+    </head>
+    <body>
+        <%- include('navbar') %>
+        <h1><%= title %></h1>
+	<form action='' method='POST' enctype='multipart/form-data'>
+            <input type='text' name='name' 
+	        placeholder='Name' required='true'></input>
+	    <textarea name='desc' placeholder='Description'
+		    required = 'true'></textarea>
+	    <input type='number' name='price' 
+	        placeholder='Price' required='true'></input>
+	    <input type='number' name='stock' 
+	        placeholder='Stock' required='true'></input>
+	    <input type='file' id='photo' name='img' accept="image/*"></input>
+	    <p>Categories</p>
+            <% for (var i = 0; i < categories.length; i++ ) { %>
+	    <input type='checkbox' id=<%= categories[i]._id %> name='category' 
+	    value=<%= categories[i]._id %> checked=<%= categories[i].checked%>>
+		    <label for=<%= categories[i]._id %>>
+			<%= categories[i].name %>
+		    </label><br>
+            <% } %>
+	    <input type='submit' value='Add Product'></input>
+	</form>
+    </body>
+</html>
+

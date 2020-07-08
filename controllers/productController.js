@@ -1,7 +1,14 @@
 var async = require('async');
+var fs = require('fs');
+var multer  = require('multer')
+var upload = multer({ dest: './public/data/uploads/' })
+
 var Product = require('../models/product');
 var Review = require('../models/review');
 var Category = require('../models/category');
+const validator = require('express-validator');
+const { body,validationResult } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
 
 exports.product_list = function(req, res, next) {
     Product.find({}, 'name price stock')
@@ -43,12 +50,74 @@ exports.product_detail = function(req, res, next) {
 };
 
 exports.product_create_get = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: product create get');
+    Category.find()
+	.exec(function(err,categories){
+            if (err) { return next(err); }
+            res.render('product_form', { title: 'Create Product', 
+                categories: categories} );
+	});
 };
 
-exports.product_create_post = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: product create post');
-};
+exports.product_create_post = [
+
+    (req, res, next) => {
+        if(!(req.body.category instanceof Array)){
+            if(typeof req.body.category==='undefined')
+            req.body.category=[];
+            else
+            req.body.category=new Array(req.body.category);
+        }
+        next();
+    },
+
+    body('name', 'Product name is required').trim().isLength({min: 1}),
+    body('desc', 'Product description is required').trim().isLength({min: 1}),
+    body('price', 'Product price is required').trim().isLength({min: 1}),
+    body('stock', 'Product stock is required').trim().isLength({min: 1}),
+
+    sanitizeBody('*').escape(),
+
+    (req, res, next) => {
+         const errors = validationResult(req);
+
+         var product = new Product(
+            {
+	        name: req.body.name,
+		description: req.body.desc,
+		price: req.body.price,
+		stock: req.body.stock,
+		categories: req.body.category,
+	    }
+	 );
+
+	 if (req.file != null) {
+	     product.img.data = fs.readFileSync(req.file.path);
+             product.img.contentType = 'image/png';
+	 }
+
+	 if (!errors.isEmpty()) {
+	     Category.find()
+		 .exec( function (err, categories) {
+		     if (err) { return next(err); }
+
+	             for (let i = 0; i < categories.length; i++) {
+                         if (product.categories
+			    .indexOf(categories[i]._id) > -1) {
+                            categories[i].checked='true';
+                         }
+                     }
+                     res.render('product_form', {title: 'Add product', 
+			 categories: categories, errors: errors.array()})
+	             return;
+		 })
+	 } else {
+	     product.save( function(err) {
+	         if (err) {return next(err);}
+		 res.redirect(product.url);
+	     });
+	 }
+    }
+];
 
 exports.product_update_get = function(req, res, next) {
     res.send('NOT IMPLEMENTED: product update get');
