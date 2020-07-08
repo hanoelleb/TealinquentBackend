@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'UTF-8'></meta>
+    </head>
+    <body>
+        <%- include('navbar') %>
+        <h1><%= title %></h1>
+        <form method='POST' action=''>
+            <input type='text' name='name' 
+                required='true' placeholder='Your name/nickname'>
+	    <input type='number' name='rating'
+		required='true' placeholder='Rating(1-5)'>
+            </input>
+	    <textarea name='details' placeholder='Details'
+		required='true'></textarea> 
+            <input type='submit' value='Add Review'></input>
+        </form>
+    </body>
+</html>
+

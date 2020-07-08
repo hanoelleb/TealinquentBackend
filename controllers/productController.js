@@ -53,6 +53,11 @@ exports.product_create_get = function(req, res, next) {
     Category.find()
 	.exec(function(err,categories){
             if (err) { return next(err); }
+	
+	    for (var i = 0; i < categories.length; i++) {
+	        categories[i].checked = 'false';
+	    }
+
             res.render('product_form', { title: 'Create Product', 
                 categories: categories} );
 	});
@@ -61,6 +66,7 @@ exports.product_create_get = function(req, res, next) {
 exports.product_create_post = [
 
     (req, res, next) => {
+	//req.body.category.forEach( cat => console.log('CAT: ' + cat) );
         if(!(req.body.category instanceof Array)){
             if(typeof req.body.category==='undefined')
             req.body.category=[];
@@ -74,8 +80,12 @@ exports.product_create_post = [
     body('desc', 'Product description is required').trim().isLength({min: 1}),
     body('price', 'Product price is required').trim().isLength({min: 1}),
     body('stock', 'Product stock is required').trim().isLength({min: 1}),
-
-    sanitizeBody('*').escape(),
+    
+    sanitizeBody('name').escape(),
+    sanitizeBody('desc').escape(),
+    sanitizeBody('price').escape(),
+    sanitizeBody('stock').escape(),
+    sanitizeBody('category.*').escape(),
 
     (req, res, next) => {
          const errors = validationResult(req);
@@ -86,7 +96,7 @@ exports.product_create_post = [
 		description: req.body.desc,
 		price: req.body.price,
 		stock: req.body.stock,
-		categories: req.body.category,
+	        categories: req.body.category,
 	    }
 	 );
 

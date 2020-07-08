@@ -1,5 +1,6 @@
 var async = require('async');
 var Review = require('../models/review');
+var Product = require('../models/product'); 
 
 exports.review_list = function(req, res, next) {
     Review.find({'product': req.params.id})
@@ -20,7 +21,11 @@ exports.review_detail = function(req, res, next) {
 }
 
 exports.review_create_get = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: review create get');
+    Product.findById(req.params.id)
+       .exec( function(err, product) {
+           if (err) { return next(err); }
+	   res.render('review_form', {title: 'Add review', product: product});
+       });
 }
 
 exports.review_create_post = function(req, res, next) {

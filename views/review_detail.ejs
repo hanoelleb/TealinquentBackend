@@ -11,13 +11,13 @@
 	<p>Details: <%= review.details %></p>
 	<hr>
 	<p>
-	<a href='/products/<%=review.product._id%>/reviews/review._id/update'>
+	<a href=<%= review.url + '/update' %>>
 	     Update review
 	</a>
 
 	</p>
 	<p>
-	<a href='/products/<%=review.product._id%>/reviews/review._id/delete'>
+	<a href=<%= review.url + '/delete' %>>
 	    Delete review
 	</a>
 	</p>

@@ -27,6 +27,10 @@
 	<% } %>
         <hr>
 
+	<p><a href=<%= product.url + '/update' %>>Update Product</a></p>
+	<p><a href=<%= product.url + '/delete' %>>Delete Product</a></p>
+	<hr>
+
 	<h3><a href='/products/<%= product._id%>/reviews'>Reviews:</a></h3>
 	<% if (reviews.length > 0) { %>
 	    <% for (var i = 0; i < reviews.length; i++) { %>
