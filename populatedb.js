@@ -65,17 +65,17 @@ function productCreate(name, description, price, stock, categories,
 	description: description,
 	price: price,
 	stock: stock,
-	img: '',
     };
-
-    if (imgpath != false) {
-        productdetail.img.data = fs.readFileSync(imgpath);
-        productdetail.img.contentType = 'image/png';
-    }
 
     if (categories != false) productdetail.categories = categories
 
     var product = new Product(productdetail);
+
+    if (imgpath != false) {
+	console.log('has path');
+        product.img.data = fs.readFileSync(imgpath);
+        product.img.contentType = 'image/png';
+    }
 
     product.save(function(err) {
         if (err) {

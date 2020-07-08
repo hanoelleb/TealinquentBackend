@@ -10,4 +10,8 @@ var ReviewSchema = new Schema(
   }
 )
 
+ReviewSchema.methods.url = function(pid) {
+       return 'products/' + pid + '/reviews/' + this._id;
+   };
+
 module.exports = mongoose.model('Review', ReviewSchema);

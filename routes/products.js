@@ -7,8 +7,6 @@ var reviewController = require('../controllers/reviewController');
 
 router.get('/', productController.product_list);
 
-router.get('/:id', productController.product_detail);
-
 router.get('/create', productController.product_create_get);
 
 router.post('/create', productController.product_create_post);
@@ -21,6 +19,10 @@ router.get('/delete/:id', productController.product_delete_get);
 
 router.post('/delete/:id', productController.product_delete_post);
 
+router.get('/:id/picture', productController.product_image);
+
+router.get('/:id', productController.product_detail);
+
 //REVIEWS
 
 router.get('/:id/reviews', reviewController.review_list);
@@ -31,12 +33,12 @@ router.get('/:id/reviews/create', reviewController.review_create_get);
 
 router.post('/:id/reviews/create', reviewController.review_create_post);
 
-router.get('/:id/reviews/:rid/update', reviewController.review_create_get);
+router.get('/:id/reviews/:rid/update', reviewController.review_update_get);
 
-router.post('/:id/reviews/:rid/update', reviewController.review_create_post);
+router.post('/:id/reviews/:rid/update', reviewController.review_update_post);
 
-router.get('/:id/reviews/:rid/delete', reviewController.review_create_get);
+router.get('/:id/reviews/:rid/delete', reviewController.review_delete_get);
 
-router.post('/:id/reviews/:rid/delete', reviewController.review_create_post);
+router.post('/:id/reviews/:rid/delete', reviewController.review_delete_post);
 
 module.exports = router;

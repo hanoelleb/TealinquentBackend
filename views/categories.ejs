@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'UTF-8'></meta>
+    </head>
+    <body>
+        <h1><%= title %></h1>
+        <% for (var i = 0; i < cat_list.length; i++ ) { %>
+            <p>
+                <a href=<%= cat_list[i].url %>><%= cat_list[i].name %></a>
+            </p>
+        <% } %>
+        <p><a href='category/create'>Add new category</a></p>
+    </body>
+</html>    
