@@ -5,8 +5,6 @@ var categoryController = require('../controllers/categoryController');
 
 router.get('/', categoryController.category_list);
 
-router.get('/:id', categoryController.category_detail);
-
 router.get('/create', categoryController.category_create_get);
 
 router.post('/create', categoryController.category_create_post);
@@ -18,5 +16,7 @@ router.post('/update', categoryController.category_update_post);
 router.get('/delete', categoryController.category_delete_get);
 
 router.post('/delete', categoryController.category_delete_post);
+
+router.get('/:id', categoryController.category_detail);
 
 module.exports = router;

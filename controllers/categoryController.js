@@ -35,7 +35,7 @@ exports.category_detail = function(req, res, next) {
 }
 
 exports.category_create_get = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: category create get');
+    res.render('category_create.ejs', {title: 'Add category'});
 }
 
 exports.category_create_post = function(req, res, next) {
