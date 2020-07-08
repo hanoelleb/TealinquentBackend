@@ -3,6 +3,7 @@ var router = express.Router();
 
 var productController = require('../controllers/productController');
 var reviewController = require('../controllers/reviewController');
+
 //PRODUCTS
 
 router.get('/', productController.product_list);
@@ -27,8 +28,6 @@ router.get('/:id', productController.product_detail);
 
 router.get('/:id/reviews', reviewController.review_list);
 
-router.get('/:id/reviews/:rid', reviewController.review_detail);
-
 router.get('/:id/reviews/create', reviewController.review_create_get);
 
 router.post('/:id/reviews/create', reviewController.review_create_post);
@@ -40,5 +39,7 @@ router.post('/:id/reviews/:rid/update', reviewController.review_update_post);
 router.get('/:id/reviews/:rid/delete', reviewController.review_delete_get);
 
 router.post('/:id/reviews/:rid/delete', reviewController.review_delete_post);
+
+router.get('/:id/reviews/:rid', reviewController.review_detail);
 
 module.exports = router;

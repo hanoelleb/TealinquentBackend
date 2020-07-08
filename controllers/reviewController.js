@@ -1,10 +1,22 @@
+var async = require('async');
+var Review = require('../models/review');
 
 exports.review_list = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: review list');
+    Review.find({'product': req.params.id})
+	.populate('product')
+	.exec( function(err, reviews) {
+	    if (err) { return next(err); }
+            res.render('reviews', { title: 'Reviews', reviews: reviews});
+	});
 }
 
 exports.review_detail = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: review detail');
+    Review.findById(req.params.rid)
+	.populate('product')
+	.exec( function(err, review) {
+            if (err) { return next(err); }
+            res.render('review_detail', {title: 'Review', review: review});
+	});
 }
 
 exports.review_create_get = function(req, res, next) {

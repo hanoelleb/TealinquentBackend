@@ -4,13 +4,14 @@
         <meta charset = 'UTF-8'></meta>
     </head>
     <body>
+	<%- include('navbar') %>
         <h1><%= title %></h1>
 
 	<img src='/products/<%= product._id%>/picture' width='25%'
 	height = '25%' >
         <p>Name: <%= product.name %></p>
 	<p>Description: <%= product.description %></p>
-	<p>Price: <%= (product.price / 100).toFixed(2) %></p>
+	<p>Price: $<%= (product.price / 100).toFixed(2) %></p>
 	<p>Stock: <%= product.stock %></p>
         <hr>
 
@@ -26,7 +27,7 @@
 	<% } %>
         <hr>
 
-	<h3>Reviews:</h3>
+	<h3><a href='/products/<%= product._id%>/reviews'>Reviews:</a></h3>
 	<% if (reviews.length > 0) { %>
 	    <% for (var i = 0; i < reviews.length; i++) { %>
 	        <p>Submitted by: <%= reviews[i].name %></p>
