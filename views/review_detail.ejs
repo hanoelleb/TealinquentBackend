@@ -6,6 +6,11 @@
     <body>
         <%- include('navbar') %>
         <h1><%= title %></h1>
+	<h3>
+	    <a href='/products/<%= product%>/reviews'>
+		 Back to all reviews:
+	    </a>
+	</h3>
 	<p>Author: <%= review.name %></p>
 	<p>Rating: <%= review.rating %></p>
 	<p>Details: <%= review.details %></p>

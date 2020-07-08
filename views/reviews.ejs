@@ -16,7 +16,11 @@
 		<p>Details: <%= reviews[i].details %></p>
             <% } %>
 	<% } %>
-	<p><a href='/products/<%= reviews[0].product._id %>/reviews/create'>Add new review</a></p>
+	<p>
+	    <a href='/products/<%= product %>/reviews/create'>
+		Add new review
+	    </a>
+	</p>
     </body>
 </html>
 

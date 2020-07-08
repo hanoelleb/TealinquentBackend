@@ -66,7 +66,6 @@ exports.product_create_get = function(req, res, next) {
 exports.product_create_post = [
 
     (req, res, next) => {
-	//req.body.category.forEach( cat => console.log('CAT: ' + cat) );
         if(!(req.body.category instanceof Array)){
             if(typeof req.body.category==='undefined')
             req.body.category=[];
