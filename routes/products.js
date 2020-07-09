@@ -16,13 +16,13 @@ router.get('/create', productController.product_create_get);
 router.post('/create', upload.single('img'), 
 	productController.product_create_post);
 
-router.get('/update/:id', productController.product_update_get);
+router.get('/:id/update/', productController.product_update_get);
 
-router.post('/update/:id', productController.product_update_post);
+router.post('/:id/update/', productController.product_update_post);
 
-router.get('/delete/:id', productController.product_delete_get);
+router.get(':id/delete/', productController.product_delete_get);
 
-router.post('/delete/:id', productController.product_delete_post);
+router.post(':id/delete/', productController.product_delete_post);
 
 router.get('/:id/picture', productController.product_image);
 

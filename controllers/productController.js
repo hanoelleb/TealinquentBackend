@@ -129,7 +129,37 @@ exports.product_create_post = [
 ];
 
 exports.product_update_get = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: product update get');
+    async.parallel(
+       {
+	  product: function(callback) {
+              Product.findById(req.params.id)
+		  .populate('categories')
+		  .exec(callback);
+	  },
+	  categories: function(callback) {
+	      Category.find(callback);
+	  }
+       }, function(err, results) {
+           if (err) {return next(err);}
+	   if (results.product == null) {
+	       var err = new Error('Product not found');
+               err.status = 404;
+               return next(err);
+	   }
+
+	   for (var i = 0; i < results.categories.length; i++) {
+	       for (var j = 0; j < results.product.categories.length; j++) {
+	           if (results.categories[i]._id.toString() ===
+			results.product.categories[j]._id.toString()) {
+                        results.categories[i].checked='true';
+                    } else
+		       results.categories[i].checked='false';
+	       }
+	   }
+	   res.render('product_form', { title: 'Update Product',
+	       categories: results.categories, product: results.product });
+     });
+     
 };
 
 exports.product_update_post = function(req, res, next) {

@@ -6,16 +6,29 @@
     <body>
         <%- include('navbar') %>
         <h1><%= title %></h1>
+	<p><%= product.name %></p>
 	<form action='' method='POST' enctype='multipart/form-data'>
-            <input type='text' name='name' 
-	        placeholder='Name' required='true'></input>
-	    <textarea name='desc' placeholder='Description'
-		    required = 'true'></textarea>
+            <input type='text' name='name'
+		placeholder='Name' required='true'
+		value='<%= locals.product ? product.name : '' %>'
+	    ></input>
+
+	    <textarea name='desc' placeholder='Description' required='true'>
+		<%= locals.product ? product.description : '' %>
+            </textarea>
+
 	    <input type='number' name='price' 
-	        placeholder='Price' required='true'></input>
+		placeholder='Price' required='true'
+		value=<%= locals.product ? product.price : '' %>
+	    ></input>
+
 	    <input type='number' name='stock' 
-	        placeholder='Stock' required='true'></input>
+		placeholder='Stock' required='true'
+		value=<%= locals.product ? product.stock : '' %>
+	    ></input>
+
 	    <input type='file' id='photo' name='img' accept="image/*"></input>
+	    
 	    <p>Categories</p>
             <% for (var i = 0; i < categories.length; i++ ) { %>
 	    <div>

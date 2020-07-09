@@ -18,4 +18,11 @@ ProductSchema
     return '/products/' + this._id;
 });
 
+ProductSchema
+.virtual('fullName')
+.get( function() {
+    return this.name;
+});
+
+
 module.exports = mongoose.model('Product', ProductSchema);
