@@ -20,9 +20,9 @@ router.get('/:id/update/', productController.product_update_get);
 
 router.post('/:id/update/', productController.product_update_post);
 
-router.get(':id/delete/', productController.product_delete_get);
+router.get('/:id/delete/', productController.product_delete_get);
 
-router.post(':id/delete/', productController.product_delete_post);
+router.post('/:id/delete/', productController.product_delete_post);
 
 router.get('/:id/picture', productController.product_image);
 

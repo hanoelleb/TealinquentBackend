@@ -156,15 +156,76 @@ exports.product_update_get = function(req, res, next) {
 		       results.categories[i].checked='false';
 	       }
 	   }
-	   res.render('product_form', { title: 'Update Product',
+	   res.render('product_update', { title: 'Update Product',
 	       categories: results.categories, product: results.product });
      });
      
 };
 
-exports.product_update_post = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: product update post');
-};
+exports.product_update_post = [
+    (req, res, next) => {
+        if(!(req.body.category instanceof Array)){
+            if(typeof req.body.category==='undefined')
+            req.body.category=[];
+            else
+            req.body.category=new Array(req.body.category);
+        }
+        next();
+    },
+
+    body('name', 'Product name is required').trim().isLength({min: 1}),
+    body('desc', 'Product description is required').trim().isLength({min: 1}),
+    body('price', 'Product price is required').trim().isLength({min: 1}),
+    body('stock', 'Product stock is required').trim().isLength({min: 1}),
+
+    sanitizeBody('name').escape(),
+    sanitizeBody('desc').escape(),
+    sanitizeBody('price').escape(),
+    sanitizeBody('stock').escape(),
+    sanitizeBody('category.*').escape(),
+
+    (req, res, next) => {
+         const errors = validationResult(req);
+         console.log(JSON.stringify(req.body));
+         var product = new Product(
+            {
+                name: req.body.name,
+                description: req.body.desc,
+                price: req.body.price,
+                stock: req.body.stock,
+                categories: req.body.category,
+		_id: req.params.id
+            }
+         );
+
+	 if (!errors.isEmpty()) {
+             console.log('ERRORS' + errors);
+	     Category.find()
+                 .exec( function (err, categories) {
+                     if (err) { return next(err); }
+
+                     for (let i = 0; i < categories.length; i++) {
+                         if (product.categories
+                            .indexOf(categories[i]._id) > -1) {
+                            categories[i].checked='true';
+                         }
+                     }
+                     res.render('product_update', {title: 'Update product',
+                         categories: categories, errors: errors.array(),
+		         product: product})
+                     return;
+             })
+	 }
+	 else {
+             console.log('no errors!!!!');
+	     Product.findByIdAndUpdate(req.params.id, product, {},
+		 function(err) {
+                 if (err) {return next(err);}
+                 res.redirect(product.url);
+             });
+	 }
+    }
+];
 
 exports.product_delete_get = function(req, res, next) {
     res.send('NOT IMPLEMENTED: product delete get');
