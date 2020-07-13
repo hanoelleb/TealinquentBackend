@@ -114,10 +114,53 @@ exports.category_update_post = [
 ]
 
 exports.category_delete_get = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: category delete get');
+    async.parallel({
+	category: function(callback) {
+            Category.findById(req.params.id)
+		.exec(callback);
+	},
+        products: function(callback) {
+	    Product.find({'categories' : req.params.id})
+		.populate('categories')
+		.exec(callback);
+        }
+    }, function (err, results) {
+         if (err) { return next(err); }
+
+	 if (results.category === null) {
+	     res.redirect('/category');
+             return;
+	 }
+
+         res.render('category_delete', {title: 'Delete Category',
+             category: results.category, products: results.products});
+    });
 }
 
 exports.category_delete_post = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: category delete post');
-}
+    async.parallel({
+        category: function(callback) {
+            Category.findById(req.params.id)
+                .exec(callback);
+        },
+        products: function(callback) {
+            Product.find({'categories' : req.params.id})
+                .exec(callback);
+        }
+    }, function (err, results) {
+         if (err) { return next(err); }
 
+         if (results.products.length > 0) {
+             res.render('category_delete', {title: 'Delete Category',
+             category: results.category, products: results.products});
+             return;
+         }
+         else {
+             Category.findByIdAndRemove(req.body.categoryId,
+		 function deleteCategory(err, thecategory) {
+	            if (err) { return next(err);} 
+                    res.redirect('/category');
+             })
+	 }
+    });
+}

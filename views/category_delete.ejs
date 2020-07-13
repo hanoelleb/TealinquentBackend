@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'UTF-8'></meta>
+    </head>
+    <body>
+        <%- include('navbar') %>
+        <h1><%= title %></h1>
+	<% if (products.length > 0) { %>
+	    <p>Please delete/remove this category from the following products before attempting to delete this category.
+	    </p>
+	    <dl>
+	    <% for (var i = 0; i < products.length; i++) { %>
+	        <dt>
+		  <a href=<%= products[i].url %>><%= products[i].name %></a> 
+		</dt>
+		<dd>
+		  <p><%= products[i].description %></p>
+		  <hr>
+
+		  <p> 
+		   <% if (products[i].categories.length > 0) { %>
+                    <% for (var j = 0; j < products[i].categories.length; j++) { %>
+                      <p>
+                        <a href= <%= products[i].categories[j].url%>>
+                          <%= products[i].categories[j].name %>
+                        </a>
+                      </p>
+                    <% } %>
+                   <% } %>
+		  </p>
+		</dd>
+	    <% } %>
+	    </dl>
+	<% } else { %>
+        <form method='POST' action=''>
+            <p>Do you really want to delete this category?</p>
+            <input type='hidden' name='categoryId' value=<%= category._id %> ></input>
+            <input type='submit' value='Delete'></input>
+        </form>
+	<% } %>
+    </body>
+</html>
+
