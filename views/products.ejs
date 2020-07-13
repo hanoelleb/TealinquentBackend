@@ -2,20 +2,23 @@
 <html>
     <head>
         <meta charset = 'UTF-8'></meta>
+	<title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
     <body>
 	<%- include('navbar') %> 
         <h1><%= title %></h1>
+	<p><a href='products/create'>Add new product</a></p>
+	<div class='products'>
 	<% for (var i = 0; i < prod_list.length; i++ ) { %>
-	    <div>
-            <img src='/products/<%= prod_list[i]._id%>/picture'
-	    width= '25%', height='25%'>
+	    <div class='product'>
+            <img src='/products/<%= prod_list[i]._id%>/picture'>
             <p>
 	        <a href=<%= prod_list[i].url %>><%= prod_list[i].name %></a>
 	    </p>
 	    <p>$<%= (prod_list[i].price / 100).toFixed(2) %></p>
 	    </div>
 	<% } %>
-	<p><a href='products/create'>Add new product</a></p>
+	</div>
     </body>
 </html>

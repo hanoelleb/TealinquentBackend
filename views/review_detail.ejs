@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset = 'UTF-8'></meta>
+	<title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
     <body>
         <%- include('navbar') %>
@@ -11,9 +13,11 @@
 		 Back to all reviews:
 	    </a>
 	</h3>
-	<p>Author: <%= review.name %></p>
-	<p>Rating: <%= review.rating %></p>
-	<p>Details: <%= review.details %></p>
+	<div class='review'>
+	    <p>Author: <%= review.name %></p>
+	    <p>Rating: <%= review.rating %></p>
+	    <p>Details: <%= review.details %></p>
+	</div>
 	<hr>
 	<p>
 	<a href=<%= review.url + '/update' %>>

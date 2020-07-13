@@ -2,6 +2,8 @@
 <html>
     <head>
         <meta charset = 'UTF-8'></meta>
+	<title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
     <body>
         <%- include('navbar') %>
@@ -14,6 +16,7 @@
 
 	    <textarea name='desc' placeholder='Description' required='true'
 	        value='<%= locals.product ? product.description : '' %>'
+                rows='8' cols='40'
             >
 		<%= locals.product ? product.description : '' %>
             </textarea>

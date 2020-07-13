@@ -2,18 +2,22 @@
 <html>
     <head>
         <meta charset = 'UTF-8'></meta>
+	<title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
     <body>
         <%- include('navbar') %>
         <h1><%= title %></h1>
 	<% if (reviews.length > 0) { %>
             <% for (var i = 0; i < reviews.length; i++ ) { %>
-                <p>
-		    <a href=<%= reviews[i].url %>>More details</a>
-                </p>
-		<p>Author: <%= reviews[i].name %></p>
-		<p>Rating: <%= reviews[i].rating %></p>
-		<p>Details: <%= reviews[i].details %></p>
+	        <div class='review'>
+		    <p>Author: <%= reviews[i].name %></p>
+		    <p>Rating: <%= reviews[i].rating %></p>
+		    <p>Details: <%= reviews[i].details %></p>
+		    <p>
+                        <a href=<%= reviews[i].url %>>More details</a>
+                    </p>
+		</div>
             <% } %>
 	<% } %>
 	<p>
