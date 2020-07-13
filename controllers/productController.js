@@ -228,9 +228,56 @@ exports.product_update_post = [
 ];
 
 exports.product_delete_get = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: product delete get');
+    async.parallel({
+        product: function(callback) {
+            Product.findById(req.params.id)
+		.populate('categories')
+		.exec(callback);
+	},
+	reviews: function(callback) {
+	    Review.find({'product' : req.params.id}).exec(callback);
+	}
+    }, function( err, results) {
+          if (err) {return next(err);}
+
+	  if (results.product === null) {
+	      res.redirect('/products/' + req.params.id);
+	  }
+
+	  res.render('product_delete', { title: 'Delete Product',
+              product: results.product, reviews: results.reviews });
+    });
 };
 
 exports.product_delete_post = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: product delete post');
+    async.parallel({
+        product: function(callback) {
+            Product.findById(req.params.id)
+                .populate('categories')
+                .exec(callback);
+        },
+        reviews: function(callback) {
+            Review.find({'product' : req.params.id}).exec(callback);
+        }
+    }, function( err, results) {
+          if (err) {return next(err);}
+
+          if (results.product === null) {
+              res.redirect('/products/' + req.params.id);
+	      return;
+          }
+
+	  if (req.body.reviewIds) {
+	      for ( var i = 0; i < req.body.reviewIds.length; i++ ) {
+                  Review.findByIdAndRemove(req.body.reviewIds[i],
+		    function deleteReview(err){if (err) return next(err);})
+	      }
+	  }
+
+          Product.findByIdAndRemove(req.body.productId, 
+             function deleteProduct(err) {
+	         if (err) { return next(err); } 
+		 res.redirect('/products/');
+	  });
+    });
 };

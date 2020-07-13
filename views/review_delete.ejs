@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'UTF-8'></meta>
+    </head>
+    <body>
+        <%- include('navbar') %>
+        <h1><%= title %></h1>
+        <form method='POST' action=''>
+            <p>Do you really want to delete this review?</p>
+	    <input type='hidden' name='reviewId' value=<%= review._id %> ></input>
+	    <input type='submit' value='Delete'></input>
+	</form>
+    </body>
+</html>
+

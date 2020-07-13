@@ -128,10 +128,30 @@ exports.review_update_post = [
 ]
 
 exports.review_delete_get = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: review delete get');
+    Review.findById(req.params.rid)
+        .populate('product')
+        .exec((err, review) => {
+        if (err) {return next(err)};
+        if (review === null) {
+            res.redirect('/products/' + req.params.id + '/reviews/' + 
+	    req.params.rid);
+            return;
+	}
+        res.render('review_delete', { title: 'Delete Review',
+            review: review });
+        });
 }
 
 exports.review_delete_post = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: review delete post');
+    Review.findById(req.params.rid)
+	.exec( (err, review) => {
+	    if (err) {return next(err);}
+	
+            Review.findByIdAndRemove(req.body.reviewId,
+		function deleteReview(err) {
+	          if (err) {return next(err);}
+                  res.redirect('/products/' + req.params.id + '/reviews');
+	    });
+	});
 }
 

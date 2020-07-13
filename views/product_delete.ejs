@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = 'UTF-8'></meta>
+    </head>
+    <body>
+        <%- include('navbar') %>
+        <h1><%= title %></h1>
+        <form method='POST' action=''>
+            <p>Do you really want to delete this product? All reviews for
+	    this product will be deleted as well.</p>
+            <input type='hidden' name='productId' value=<%= product._id %> >
+	    </input>
+	    <% for (var i = 0; i < reviews.length; i++) { %>
+	    <input type='hidden' name='reviewIds' value=<%= reviews[i]._id %> >
+            </input>
+	    <% } %>
+            <input type='submit' value='Delete'></input>
+        </form>
+    </body>
+</html>
+
