@@ -9,11 +9,17 @@
 	<%- include('navbar') %>
         <h1>Products relating to: <%= category.name %></h1>
 	<% if (products.length > 0 ) { %>
+	    <div class='products'>
             <% for (var i = 0; i < products.length; i++ ) { %>
+	        <div class='product'>
+	        <img src='/products/<%= products[i]._id%>/picture'>
                 <p>
                     <a href=<%= products[i].url %>><%= products[i].name %></a>
                 </p>
+		<p>$<%= (products[i].price / 100).toFixed(2) %></p>
+		</div>
             <% } %>
+	    </div>
 	<% } else { %>
 	    <p>No products available for this category</p>
 	<% } %>

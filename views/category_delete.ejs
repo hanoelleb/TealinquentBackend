@@ -14,12 +14,15 @@
 	    <dl>
 	    <% for (var i = 0; i < products.length; i++) { %>
 	        <dt>
-		  <a href=<%= products[i].url %>><%= products[i].name %></a> 
+		<a href=<%= products[i].url %>>
+		    <h3><%= products[i].name %></h3>
+		</a> 
 		</dt>
 		<dd>
+		  <h3>Product Description</h3>
 		  <p><%= products[i].description %></p>
 		  <hr>
-
+                  <h3>Categories</h3>
 		  <p> 
 		   <% if (products[i].categories.length > 0) { %>
                     <% for (var j = 0; j < products[i].categories.length; j++) { %>
