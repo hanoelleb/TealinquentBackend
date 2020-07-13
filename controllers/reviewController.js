@@ -75,12 +75,57 @@ exports.review_create_post = [
 ]
 
 exports.review_update_get = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: review update get');
+    Review.findById(req.params.rid)
+	.populate('product')
+	.exec(function(err, review) {
+	    if (err) {return next(err);}
+	    if (review == null) {
+	        var err = new Error('Review not found');
+		err.status = 404;
+		return next(err);
+	    }
+
+	    res.render('review_form', {title: 'Update review',
+		review: review});
+	})
 }
 
-exports.review_update_post = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: review update post');
-}
+exports.review_update_post = [
+    body('name', 'Name must not be empty.').trim().isLength({ min: 1 }),
+    body('rating', 'Rating must not be empty.').trim().isNumeric().isLength({ min: 1 }),
+    body('details', 'Details must not be empty.').trim().isLength({ min: 1 }),
+
+    sanitizeBody('name').escape(),
+    sanitizeBody('rating').escape(),
+    sanitizeBody('details').escape(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+	var review = new Review (
+	  {
+              name: req.body.name,
+              rating: req.body.rating,
+              details: req.body.details,
+	      product: req.params.id,
+              _id: req.params.rid
+	  }
+	);
+
+	if (!errors.isEmpty()){
+	    res.render('review_form', {title: 'Update review', 
+		review: review});
+	    return;
+	}
+	else {
+	    Review.findByIdAndUpdate(req.params.rid, review, {},
+		function(err,thereview) {
+		    if (err) { return next(err);}
+                    res.redirect(thereview.url);
+		});
+	}
+    }
+]
 
 exports.review_delete_get = function(req, res, next) {
     res.send('NOT IMPLEMENTED: review delete get');

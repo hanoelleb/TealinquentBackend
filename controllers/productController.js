@@ -232,5 +232,5 @@ exports.product_delete_get = function(req, res, next) {
 };
 
 exports.product_delete_post = function(req, res, next) {
-    res.send('NOT IMPLEMENTED: product dekete post');
+    res.send('NOT IMPLEMENTED: product delete post');
 };

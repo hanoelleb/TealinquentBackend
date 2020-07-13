@@ -8,12 +8,17 @@
         <h1><%= title %></h1>
         <form method='POST' action=''>
             <input type='text' name='name' 
-                required='true' placeholder='Your name/nickname'>
+                required='true' placeholder='Your name/nickname'
+	        value='<%= locals.review ? review.name : '' %>'
+            >
 	    <input type='number' name='rating'
-		required='true' placeholder='Rating(1-5)'>
-            </input>
+		required='true' placeholder='Rating(1-5)'
+	        value='<%= locals.review ? review.rating : '' %>'
+	    >
 	    <textarea name='details' placeholder='Details'
-		required='true'></textarea> 
+		required='true'>
+                <%= locals.review ? review.details : '' %>
+	    </textarea> 
             <input type='submit' value='Add Review'></input>
         </form>
     </body>
