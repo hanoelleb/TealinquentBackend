@@ -29,39 +29,7 @@ var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-/*
-passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
-      if (err) {
-        console.log('ERROR GENERAL\n');
-        return done(err);
-      };
-      if (!user) {
-        console.log('ERROR USER\n');
-        return done(null, false, { msg: "Incorrect username" });
-      }
-      bcrypt.compare(password, user.password, (err, res) => {
-          if (res) { return done(null, user); console.log('logged in')}
-          else {
-             console.log('not working');
-             return done(null, false, {msg: "Incorrect password"});
-          }
-      });
-    });
-  })
-);
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-*/
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

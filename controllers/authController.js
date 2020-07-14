@@ -5,6 +5,8 @@ const validator = require('express-validator');
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 
+require('dotenv').config();
+
 exports.signup_get = function(req, res) {
     res.render('sign_up', {title: 'Sign up'});
 }
@@ -56,3 +58,39 @@ exports.signup_post = [
 exports.login_get = function(req, res) {
     res.render('login', {title: 'Login'});
 }
+
+exports.admin_get = function(req, res) {
+    res.render('admin', {title: 'Admin'});
+}
+
+exports.admin_post = [
+    body('code', 'Please enter the code').trim().isLength({min: 1})
+        .custom((value) => value === process.env.ADMIN_CODE)
+	.withMessage('Incorrect code.'),
+
+    sanitizeBody('code').escape(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+           res.render('admin', {title: 'Admin', errors: errors.array()});
+           return;
+        } 
+	else { 
+            var user = new User({
+	        first_name: res.locals.first_name,
+                family_name: res.locals.family_name,
+                username: res.locals.username,
+                password: res.locals.password,
+                member_status: 1,
+		_id: res.locals.currentUser._id
+	    })
+            User.findByIdAndUpdate(res.locals.currentUser._id, user, {},
+	        function (err) {
+                    if (err) { return next(err); }
+                    res.redirect('/');
+	    });
+	}
+    }
+]
