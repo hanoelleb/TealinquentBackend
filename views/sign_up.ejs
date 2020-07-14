@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8'></meta>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+	<%- include('navbar') %>
+        <form action='' method='POST'>
+	    <h3>Sign up</h3>
+            <input type='text' name='firstName' placeholder='First name'>
+	    </input>
+            <input type='text' name='familyName' placeholder='Family name'>
+	    </input>
+            <input type='email' name='username' placeholder='Email'></input>
+            <input type='password' name='password' placeholder='Password'>
+	    </input>
+            <input type='password' name='confirm' 
+	        placeholder='Confirm password'>
+	    </input>
+	    <input type='submit' value='Sign up'></input>
+        </form>
+	<p>Already have an account? <a href='/auth/login'>Login</a></p>
+    </body>
+    <% if (locals.errors) { %>
+             <ul>
+                 <% for (var i = 0; i < errors.length; i++) { %>
+                     <li><%= errors[i].msg %></li>
+                 <% } %>
+             </ul>
+    <% } %>
+
+</html>

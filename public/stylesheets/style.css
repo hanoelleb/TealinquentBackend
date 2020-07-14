@@ -37,7 +37,8 @@ form {
   list-style: none;
   display: flex;
   flex-direction: row;
-  flex: 1; }
+  flex: 1;
+  border-bottom: 1px solid white; }
   .navbar li {
     padding: 5px; }
 

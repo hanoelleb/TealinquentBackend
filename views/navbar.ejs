@@ -1,10 +1,19 @@
 <ul class='navbar'>
-    <li><a href='/products'>Tealinquent</a></li>
-    <li><a href='/category'>All Categories</a></li>
+    <li><a href='/products'><h3>Tealinquent</h3></a></li>
+    <li><a href='/category'><h3>All Categories</h3></a></li>
     <li>
         <a href='https://hanoelleb.github.io/Tealinquent/'>
-            Tea Room Site
+            <h3>Tea Room Site</h3>
         </a>
     </li>
-    <li>Cart</li>
+    <li><h3>Cart</h3></li>
+    <% if (locals.currentUser) { %>
+        <li>
+            <a href='/logout'>Logout</a>
+        </li>
+    <% } else { %>
+        <a href='/auth/login'>
+            <h3>Login</h3>
+        </a>
+    <% } %>
 </ul>
