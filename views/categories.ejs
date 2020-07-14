@@ -13,6 +13,8 @@
                 <a href=<%= cat_list[i].url %>><%= cat_list[i].name %></a>
             </p>
         <% } %>
+	<% if (locals.currentUser) { %>
         <p><a href='category/create'>Add new category</a></p>
+	<% } %>
     </body>
 </html>    

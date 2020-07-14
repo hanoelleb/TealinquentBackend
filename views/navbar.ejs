@@ -9,11 +9,11 @@
     <li><h3>Cart</h3></li>
     <% if (locals.currentUser) { %>
         <li>
-            <a href='/logout'>Logout</a>
+            <a href='/auth/logout'><h3>Logout</h3></a>
         </li>
     <% } else { %>
-        <a href='/auth/login'>
-            <h3>Login</h3>
-        </a>
+        <li>
+            <a href='/auth/login'><h3>Login</h3></a>
+        </li>
     <% } %>
 </ul>

@@ -20,11 +20,14 @@
 		</div>
             <% } %>
 	<% } %>
+
+	<% if (locals.currentUser) { %>
 	<p>
 	    <a href='/products/<%= product %>/reviews/create'>
 		Add new review
 	    </a>
 	</p>
+	<% } %>
     </body>
 </html>
 

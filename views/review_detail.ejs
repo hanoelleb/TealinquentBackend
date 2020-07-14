@@ -18,6 +18,7 @@
 	    <p>Rating: <%= review.rating %></p>
 	    <p>Details: <%= review.details %></p>
 	</div>
+	<% if (locals.currentUser) { %>
 	<hr>
 	<p>
 	<a href=<%= review.url + '/update' %>>
@@ -30,6 +31,7 @@
 	    Delete review
 	</a>
 	</p>
+	<% } %>
     </body>
 </html>
 

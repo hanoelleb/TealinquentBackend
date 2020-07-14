@@ -8,7 +8,9 @@
     <body>
 	<%- include('navbar') %> 
         <h1><%= title %></h1>
-	<p><a href='products/create'>Add new product</a></p>
+	<% if (locals.currentUser) { %>
+	    <p><a href='products/create'>Add new product</a></p>
+	<% } %>
 	<div class='products'>
 	<% for (var i = 0; i < prod_list.length; i++ ) { %>
 	    <div class='product'>
