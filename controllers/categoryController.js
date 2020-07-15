@@ -39,7 +39,10 @@ exports.category_detail = function(req, res, next) {
 }
 
 exports.category_create_get = function(req, res, next) {
-    res.render('category_form', {title: 'Add category'});
+    if (res.locals.currentUser)
+        res.render('category_form', {title: 'Add category'});
+    else
+	res.redirect('/auth/login');
 }
 
 exports.category_create_post = [
@@ -76,12 +79,16 @@ exports.category_create_post = [
 ]
 
 exports.category_update_get = function(req, res, next) {
+    if (res.locals.currentUser) {
     Category.findById(req.params.id)
         .exec( function(err, category) {
 	    if (err) { return next(err); }
             res.render('category_form', {title: 'Update category', 
 		category: category});
 	});
+    } else {
+        res.redirect('/auth/login');
+    }
 }
 
 exports.category_update_post = [
@@ -114,6 +121,7 @@ exports.category_update_post = [
 ]
 
 exports.category_delete_get = function(req, res, next) {
+    if (res.locals.currentUser) {
     async.parallel({
 	category: function(callback) {
             Category.findById(req.params.id)
@@ -135,6 +143,8 @@ exports.category_delete_get = function(req, res, next) {
          res.render('category_delete', {title: 'Delete Category',
              category: results.category, products: results.products});
     });
+    } else 
+	res.redirect('/auth/login');
 }
 
 exports.category_delete_post = function(req, res, next) {

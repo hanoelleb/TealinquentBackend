@@ -50,6 +50,7 @@ exports.product_detail = function(req, res, next) {
 };
 
 exports.product_create_get = function(req, res, next) {
+    if (res.locals.currentUser) {
     Category.find()
 	.exec(function(err,categories){
             if (err) { return next(err); }
@@ -61,7 +62,9 @@ exports.product_create_get = function(req, res, next) {
             res.render('product_form', { title: 'Create Product', 
                 categories: categories} );
 	});
-};
+    } else 
+	res.redirect('/auth/login');
+}
 
 exports.product_create_post = [
 
@@ -129,6 +132,7 @@ exports.product_create_post = [
 ];
 
 exports.product_update_get = function(req, res, next) {
+    if (res.locals.currentUser) {
     async.parallel(
        {
 	  product: function(callback) {
@@ -159,7 +163,8 @@ exports.product_update_get = function(req, res, next) {
 	   res.render('product_update', { title: 'Update Product',
 	       categories: results.categories, product: results.product });
      });
-     
+    } else 
+	res.redirect('/auth/login');
 };
 
 exports.product_update_post = [
@@ -228,6 +233,7 @@ exports.product_update_post = [
 ];
 
 exports.product_delete_get = function(req, res, next) {
+    if (res.locals.currentUser) {
     async.parallel({
         product: function(callback) {
             Product.findById(req.params.id)
@@ -247,6 +253,8 @@ exports.product_delete_get = function(req, res, next) {
 	  res.render('product_delete', { title: 'Delete Product',
               product: results.product, reviews: results.reviews });
     });
+    } else 
+	res.redirect('/auth/login');
 };
 
 exports.product_delete_post = function(req, res, next) {

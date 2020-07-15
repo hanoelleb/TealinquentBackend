@@ -75,6 +75,7 @@ exports.review_create_post = [
 ]
 
 exports.review_update_get = function(req, res, next) {
+    if (res.locals.currentUser) {
     Review.findById(req.params.rid)
 	.populate('product')
 	.exec(function(err, review) {
@@ -88,6 +89,8 @@ exports.review_update_get = function(req, res, next) {
 	    res.render('review_form', {title: 'Update review',
 		review: review});
 	})
+    } else 
+	res.redirect('/auth/login');
 }
 
 exports.review_update_post = [
@@ -128,6 +131,7 @@ exports.review_update_post = [
 ]
 
 exports.review_delete_get = function(req, res, next) {
+    if (res.locals.currentUser) {
     Review.findById(req.params.rid)
         .populate('product')
         .exec((err, review) => {
@@ -140,6 +144,8 @@ exports.review_delete_get = function(req, res, next) {
         res.render('review_delete', { title: 'Delete Review',
             review: review });
         });
+    } else 
+	res.redirect('/auth/login');
 }
 
 exports.review_delete_post = function(req, res, next) {
